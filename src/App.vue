@@ -1,5 +1,15 @@
+<script setup>
+const test = async () => {
+  console.log("test");
+  const fileName = await window.electronAPI.openFile();
+  const res = await window.electronAPI.readFile(fileName);
+  console.log(res);
+};
+</script>
+
 <template>
   <nav>
+    <button class="button" @click="test()">test BTN</button>
     <router-link to="/">Home</router-link> |
     <router-link to="/about">About</router-link>
   </nav>
