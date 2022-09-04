@@ -6,26 +6,41 @@ const isDevelopment = process.env.NODE_ENV !== "production";
 import { ipcMain, dialog } from "electron";
 import fs from "fs";
 import path from "path";
+const Store = require("electron-store");
 
 // Scheme must be registered before the app is ready
 protocol.registerSchemesAsPrivileged([
   { scheme: "app", privileges: { secure: true, standard: true } },
 ]);
 
+const store = new Store();
+
 async function handleOpenFile() {
   const { canceled, filePaths } = await dialog.showOpenDialog();
+
   if (canceled) {
-    return;
+    return undefined;
   } else {
-    return filePaths[0];
+    const filePath = filePaths[0];
+    const res = fs.readFileSync(filePath);
+    const list = res.toString().split(/\r\n|[\r\n]/);
+    store.set("list", list);
+    return list;
   }
 }
 
+// load data from local storage
+async function getStoreData() {
+  const list = store.get("list");
+  return list;
+}
+
 async function createWindow() {
+  await getStoreData();
   ipcMain.handle("dialog:openFile", handleOpenFile);
-  ipcMain.handle("fs:readFile", async (event, filePath) => {
-    const res = fs.readFileSync(filePath);
-    return res.toString().split(/\r\n|[\r\n]/);
+  ipcMain.handle("store:getData", getStoreData);
+  ipcMain.handle("store:deleteData", async () => {
+    store.delete("list");
   });
   // Create the browser window.
   const win = new BrowserWindow({

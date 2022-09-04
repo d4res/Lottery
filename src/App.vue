@@ -1,23 +1,20 @@
 <script setup>
-const test = async () => {
-  console.log("test");
-  const fileName = await window.electronAPI.openFile();
-  const res = await window.electronAPI.readFile(fileName);
-  console.log(res);
-};
+// const test = async () => {
+//   console.log("test");
+//   const fileName = await window.electronAPI.openFile();
+//   const res = await window.electronAPI.readFile(fileName);
+//   console.log(res);
+// };
+import BaseHeader from "./components/BaseHeader.vue";
 </script>
 
 <template>
-  <nav>
-    <button class="button" @click="test()">test BTN</button>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
+  <BaseHeader> </BaseHeader>
   <router-view />
 </template>
 
 <style>
-#app {
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -36,5 +33,5 @@ nav a {
 
 nav a.router-link-exact-active {
   color: #42b983;
-}
+} */
 </style>
