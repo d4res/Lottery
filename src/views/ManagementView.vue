@@ -36,6 +36,9 @@ onMounted(() => {
 // importData 将从electron store提供的本地存储中获取信息并赋予list变量
 const importData = async () => {
   const rawList = await window.electronAPI.openFile();
+  if (rawList === undefined) {
+    return;
+  }
   const groupedList = parseRawList(rawList);
   list.value = groupedList;
 };
