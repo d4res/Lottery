@@ -51,24 +51,33 @@ const resetData = async () => {
 </script>
 
 <template>
-  <nav class="level">
-    <button class="button level-item has-text-centered" @click="importData()">
-      导入
-    </button>
+  <div>
+    <button class="button is-primary" @click="importData()">导入</button>
 
-    <button class="button level-item has-text-centered" @click="resetData()">
-      清空
-    </button>
-  </nav>
+    <button class="button is-danger" @click="resetData()">清空</button>
+  </div>
 
   <div class="columns" v-for="group in list" :key="group">
-    <div class="column">{{ group[0] }}</div>
-    <div class="column">{{ group[1] }}</div>
-    <div class="column">{{ group[2] }}</div>
+    <div class="column">
+      <p>{{ group[0] }}</p>
+    </div>
+    <div class="column">
+      <p>{{ group[1] }}</p>
+    </div>
+    <div class="column">
+      <p>{{ group[2] }}</p>
+    </div>
   </div>
 </template>
 
 <style scoped>
+div {
+  text-align: center;
+}
+
+button {
+  width: 20%;
+}
 .column {
   text-align: center;
 }
